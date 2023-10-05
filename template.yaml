@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: >
+  TODO-LIST v5.0 
+
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+
+Resources:
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: develop
+
+  MyApiGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: /home/shravani/TODO_LIST/backend/lamda/
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.10
+      Architectures:
+        - x86_64
+      Role: arn:aws:iam::875625547240:role/fullstack-s3-lambda-access
+      FunctionName: app
+      Events:
+        Getapp:
+          Type: HttpApi
+          Properties:
+            Path: /backend/app
+            Method: GET
+            ApiId:
+              Ref: HttpApi
+  # MyApiPostFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: /home/shravani/TODO_LIST/backend/lamda/
+  #     Handler: lambda_function.lambda_handler
+  #     Runtime: python3.10
+  #     Architectures:
+  #       - x86_64
+  #     Role: arn:aws:iam::875625547240:role/fullstack-s3-lambda-access
+  #     FunctionName: app
+  #     Events:
+  #       Getapp:
+  #         Type: HttpApi
+  #         Properties:
+  #           Path: /backend/app
+  #           Method: POST
+  #           ApiId:
+  #             Ref: HttpApi
+  # MyApiPutFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: /home/shravani/TODO_LIST/backend/lamda/
+  #     Handler: lambda_function.lambda_handler
+  #     Runtime: python3.10
+  #     Architectures:
+  #       - x86_64
+  #     Role: arn:aws:iam::875625547240:role/fullstack-s3-lambda-access
+  #     FunctionName: app
+  #     Events:
+  #       Getapp:
+  #         Type: HttpApi
+  #         Properties:
+  #           Path: /backend/app
+  #           Method: PUT
+  #           ApiId:
+  #             Ref: HttpApi
+  # MyApiDeleteFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: /home/shravani/TODO_LIST/backend/lamda/
+  #     Handler: lambda_function.lambda_handler
+  #     Runtime: python3.10
+  #     Architectures:
+  #       - x86_64
+  #     Role: arn:aws:iam::875625547240:role/fullstack-s3-lambda-access
+  #     FunctionName: app
+  #     Events:
+  #       Getapp:
+  #         Type: HttpApi
+  #         Properties:
+  #           Path: /backend/app
+  #           Method: DELETE
+  #           ApiId:
+  #             Ref: HttpApi
